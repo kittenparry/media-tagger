@@ -15,23 +15,13 @@ app.on('ready', function(){
   });
   //load html into the window
   //file://dirname/main_window.html
-  // main_window.loadURL(
-  //   is_dev ? 'http://localhost:3000' :
-  //     url.format({
-  //       pathname: path.join(__dirname, '../build/index.html'),
-  //       protocol: 'file',
-  //       slashes: true,
-  // }));
-  //temporal test
   main_window.loadURL(url.format({
-    pathname: path.join(__dirname, 'test/window.html'),
+    pathname: path.join(__dirname, 'program/window.html'),
     protocol: 'file',
     slashes: true,
   }));
   //quit on main window close
   main_window.on('closed', function(){
-    //process.exit();
-    //TODO: doesn't kill the server on window shutdown.
     app.quit();
     main_window = null;
   });

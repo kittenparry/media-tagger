@@ -1,0 +1,48 @@
+body, html {
+  height: 99%;
+  width: 99%;
+  display: flex;
+  flex-direction: row;
+}
+body {
+  font-family: Tahoma, Geneva, sans-serif;
+  line-height: 1.4;
+  background: #F0F0F0;
+  color: #36454F;
+  margin: 5px;
+}
+.display_div {
+  border: 1px solid #36454F;
+  margin: 5px;
+  padding: 1%;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+.overflow-y {
+  overflow-y: scroll;
+}
+#div_tree {
+  overflow: scroll;
+  white-space: nowrap;
+}
+.flex-1 {
+  flex: 1;
+}
+.flex-2 {
+  flex: 2;
+}
+.flex-3 {
+  flex: 3;
+}
+.flex-7 {
+  flex: 7;
+}
+.flex-19 {
+  flex: 19;
+}

@@ -24,6 +24,7 @@ const walkSync = (dir, filelist = []) => {
   return filelist;
 };
 // either one. 
+// └📁
 var walkSync2 = function(dir, filelist) {
 var path = path || require('path');
 var fs = fs || require('fs'),
