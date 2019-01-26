@@ -9,14 +9,17 @@ import Files from './components/display/files/Files';
 class App extends Component {
   render() {
     return (
-      <div className="App" style={ style_app }>
-        <div style={ style_left }>
-          <Tree style={ style_tree }/>
-          <Tags style={ style_tags }/>
+      <div className="App flex-row" 
+      style={ style_app }>
+        <div className='display_div flex-col' 
+        style={ style_left }>
+          <Tree className=''/>
+          <Tags className=''/>
         </div>
-        <div style={ style_right }>
-          <Search style={ style_search }/>
-          <Files style={ style_files}/>
+        <div className='display_div flex-col' 
+        style={ style_right }>
+          <Search className='flex-1'/>
+          <Files className='flex-9'/>
         </div>
       </div>
     );
@@ -24,30 +27,14 @@ class App extends Component {
 }
 
 const style_app = {
-  display: 'flex',
-  height: '100%',
+  height: '99%',
+  width: '99%',
 };
 const style_left = {
-  flex: '1',
-  display: 'flex',
-  flexDirection: 'column',
-};
-const style_right = {
-  flex: '3',
-  display: 'flex',
-  flexDirection: 'column',
-};
-const style_tree = {
-  flex: '3',
-};
-const style_tags = {
   flex: '2',
 };
-const style_search = {
-  flex: '1',
-};
-const style_files = {
-  flex: '9',
-};
+const style_right = {
+  flex: '7',
+}
 
 export default App;
