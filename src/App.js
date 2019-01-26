@@ -10,14 +10,14 @@ class App extends Component {
   render() {
     return (
       <div className="App flex-row" 
-      style={ style_app }>
-        <div className='display_div flex-col' 
-        style={ style_left }>
+        style={ style_app }>
+        <div className='flex-col' 
+          style={ style_left }>
           <Tree className=''/>
           <Tags className=''/>
         </div>
-        <div className='display_div flex-col' 
-        style={ style_right }>
+        <div className='flex-col' 
+          style={ style_right }>
           <Search className='flex-1'/>
           <Files className='flex-9'/>
         </div>

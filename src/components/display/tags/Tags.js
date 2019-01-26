@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export default class Tags extends Component {
   render() {
     return (
-      <div style={ style_div }>
+      <div className='display_div' style={ style_div }>
         <h3>tags</h3>
       </div>
     )

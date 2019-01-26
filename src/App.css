@@ -15,7 +15,7 @@ body, html, #root {
   width: 100%;
   overflow: hidden;
 }
-.display_div div {
+.display_div {
   border: 1px solid #36454F;
   margin: 5px;
   padding: 1%;
