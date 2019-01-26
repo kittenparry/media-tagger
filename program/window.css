@@ -1,3 +1,8 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 body, html {
   height: 99%;
   width: 99%;
@@ -45,4 +50,17 @@ body {
 }
 .flex-19 {
   flex: 19;
+}
+.thumbnail {
+  width: 18%;
+  display: inline-block;
+  background-size: contain;
+  padding: 5px;
+  margin: 1%;
+  background: #FFF;
+  border: 1px solid #36454F;
+  border-radius: 3%;
+}
+.thumbnail img {
+  max-width: 100%;
 }
