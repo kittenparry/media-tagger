@@ -1,10 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-const test_multiple = 'E:/from4chan/4chan/wg/'
-const test3 = 'E:/from4chan/4chan/';
-const test_one = test_multiple + '7029580/';
-const test4 = 'F:/Downloads';
 files_test = () => {
   var dom = document.getElementById('div_files');
   dom.innerHTML += `<h4>${test_one}</h4>
@@ -16,64 +12,78 @@ files_test = () => {
     </div>` ;
   })
 };
-folders_test = (dir, filelist = []) => {
-  var files = fs.readdirSync(dir);
-  for(var file of files){
+//returns file tree dictionary and array of a path
+get_folders = (dir, filelist = []) => {
+  var everything = fs.readdirSync(dir);
+  for(var file of everything){
     var dir_file = path.join(dir, file);
     var dirent = fs.statSync(dir_file);
+    //check if a path is directory
+    //if it is run the function again
     if(dirent.isDirectory()){
-      //console.log(dir_file);
       var dir_cont = {file: dir_file, files: []};
-      dir_cont.files = folders_test(dir_file, dir.files);
+      dir_cont.files = get_folders(dir_file, dir.files);
       filelist.push(dir_cont);
     }else{
       //filelist.push({file: dir_file});
+      //add non-folders to the filelist
+      //not needed for the project
     }
   }
   return filelist;
 };
+//len: length of the first path in the tree
 draw_tree = (list, len = 0) => {
-  var pre = '└📁';
   var len = len;
-  var dom = document.getElementById('div_files');
-  //console.log(list);
-  //dom.innerHTML += len + '<br/>';
+  var dom = document.getElementById('div_tree');
   for(var el of list){
-    //dom.innerHTML += `${pre} ${el.file}<br/>`;
-    var folder = el.file.split('\\');
-    var len_diff = folder.length - len;
-    var pre2 = get_pre(len_diff) + pre;
-    var folder2 = folder[folder.length-1];
-    dom.innerHTML += `${pre2} ${folder2}<br/>`;
-    //dom.innerHTML += `${folder.length}<br/>`;
+    dom.innerHTML += get_tree_el(...get_values(el.file, len));
     for(var file of el.files){
-      //dom.innerHTML += `${pre} ${file.file}<br/>`;
-      var folder = file.file.split('\\');
-      var len_diff = folder.length - len;
-      var pre2 = get_pre(len_diff) + pre;
-      var folder2 = folder[folder.length-1];
-      dom.innerHTML += `${pre2} ${folder2}<br/>`;
-      //dom.innerHTML += `${folder.length}<br/>`;
+      dom.innerHTML += get_tree_el(...get_values(file.file, len));
       if(file.files.length > 0){
         draw_tree(file.files, len);
-      }else{
       }
     }
   }
 };
+//adds x number of spaces to the display prefix of a folder
 get_pre = (len_diff) => {
   var add = '';
   if(len_diff > 0){
     for(x=0;x<len_diff;x++){
-      add += '-';
+      add += '&nbsp;&nbsp;'; //maybe use one instead?
     }
   }
   return add;
 }
+//returns the tree element of a folder
+get_tree_el = (pre, folder) => {
+  var el = `<div class='tree_el'>${pre} ${folder}</div>`;
+  return el;
+}
+//returns file prefix and folder name from file path and first path length
+/*
+ * pre: file display name prefix
+ * len_diff: difference in length to the first path
+ *  to determine the number of &nbsp; prints in the get_pre()
+ * add: file prefix with additional spaces depending on the len_diff
+ * folder: folder name split from the path (last element of split_path)
+ */
+get_values = (file, len) => {
+  var pre = '└📁';
+  var split_path = file.split('\\');
+  var len_diff = split_path.length - len;
+  var add = get_pre(len_diff) + pre;
+  var folder = split_path[split_path.length - 1];
+  return [add, folder];
+};
+//gets folder list, gets first path length, draws the file tree
+print_tree = (path) => {
+  var list = get_folders(path);
+  var len = list[0].file.split('\\').length;
+  draw_tree(list, len);
+}
 
-//files_test();
-//folders_test(test3);
-var list = folders_test(test3);
-var len = list[0].file.split('\\').length;
-//var len = 0;
-draw_tree(list, len);
+module.exports = {
+  print_tree: print_tree,
+}
