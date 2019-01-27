@@ -69,3 +69,9 @@ body {
   border: 1px solid #36454F;
   cursor: pointer;
 }
+.inv {
+  display: none;
+}
+.selected {
+  background: #337ab7;
+}

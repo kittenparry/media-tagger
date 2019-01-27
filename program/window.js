@@ -6,13 +6,58 @@ draw_files = (dir) => {
   var dom = document.getElementById('div_files');
   dom.innerHTML = '';
   dom.innerHTML += `<h4>${dir}</h4>
+    <div id='div_sel_btns'>
+      <button id='sel_all_btn'>Select All</button>
+      <button id='desel_all_btn'>Deselect All</button>
+    </div>
     <div id='div_files_files'></div>`;
-  var ul = document.getElementById('div_files_files');
+  var div = document.getElementById('div_files_files');
+  div.addEventListener('click', (e) => {
+    if(e.target.tagName === 'IMG'){
+      image_check(e.target);
+    }
+  });
+  document.getElementById('div_sel_btns').addEventListener('click', (e) => {
+    if(e.target.tagName === 'BUTTON'){
+      var con;
+      if(e.target.id == 'sel_all_btn'){
+        con = true;
+      }else if(e.target.id == 'desel_all_btn'){
+        con = false;
+      }
+      select_all(con);
+    }
+  });
   fs.readdirSync(dir).forEach((file) => {
-    ul.innerHTML += `<div class='thumbnail'>
-    <img class='' src='${path.join(dir, file)}'/>
+    div.innerHTML += `<div class='thumbnail'>
+    <input class='inv' type='checkbox'/>
+    <img src='${path.join(dir, file)}'/>
     </div>` ;
-  })
+  });
+};
+//check the checkbox that exists in the same div as the image
+image_check = (e) => {
+  var checkbox = e.parentElement.firstElementChild;
+  checkbox.checked = !checkbox.checked;
+  var div = e.parentNode;
+  if(checkbox.checked){
+    div.classList.add('selected');
+  }else{
+    div.classList.remove('selected');
+  }
+};
+//check all the checkboxes
+select_all = (con) => {
+  var els = document.getElementById('div_files_files').childNodes;
+  els.forEach((el) =>{
+    var checkbox = el.firstElementChild;
+    checkbox.checked = con;
+    if(checkbox.checked){
+      el.classList.add('selected');
+    }else{
+      el.classList.remove('selected');
+    }
+  });
 };
 //returns file tree dictionary and array of a path
 get_folders = (dir, filelist = []) => {
@@ -85,7 +130,7 @@ add_div_tree = () => {
   document.getElementById('div_tree').innerHTML += `<div id='div_tree_tree'></div>`;
   document.getElementById('div_tree_tree').addEventListener('click', (e) => {
     draw_files(e.target.title);
-  })
+  });
 }
 //gets folder list, gets first path length, draws the file tree
 print_tree = (path) => {
