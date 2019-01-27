@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
+display_errors = false;
 //draw files in accordance to the mouse click on tree
 draw_files = (dir) => {
   var dom = document.getElementById('div_files');
@@ -9,6 +10,7 @@ draw_files = (dir) => {
     <div id='div_sel_btns'>
       <button id='sel_all_btn'>Select All</button>
       <button id='desel_all_btn'>Deselect All</button>
+      <label id='err_label'>Load errors?</label> <input id='err_check' type='checkbox'/>
     </div>
     <div id='div_files_files'></div>`;
   var div = document.getElementById('div_files_files');
@@ -26,14 +28,37 @@ draw_files = (dir) => {
         con = false;
       }
       select_all(con);
+    }else if(e.target.id === 'err_check' || e.target.id == 'err_label'){
+      display_errors = !display_errors;
+      draw_files(dir);
     }
   });
+  document.getElementById('err_check').checked = display_errors;
   fs.readdirSync(dir).forEach((file) => {
-    div.innerHTML += `<div class='thumbnail'>
-    <input class='inv' type='checkbox'/>
-    <img src='${path.join(dir, file)}'/>
-    </div>` ;
+    var dir_file = path.join(dir, file);
+    var dirent = fs.statSync(dir_file);
+    //check if the src is a directory (more like if it isn't)
+    if(!dirent.isDirectory()){
+      div.innerHTML += `<div class='thumbnail'>
+        <input class='inv' type='checkbox'/>
+        <img src='${path.join(dir, file)}'
+        onerror='image_load_err(this);'/>
+        </div>` ;
+    }
   });
+};
+//display an error message or don't display the div at all
+//on image load error
+image_load_err = (img) => {
+  var div = img.parentNode;
+  if(display_errors){
+    img.classList.add('inv');
+    div.classList.add('overflow-x');
+    div.innerHTML = `Error loading the media.<br/>
+    <span class='err_src'>${img.src}</span><br/>`;
+  }else{
+    div.classList.add('inv');
+  }
 };
 //check the checkbox that exists in the same div as the image
 image_check = (e) => {
@@ -102,12 +127,12 @@ get_pre = (len_diff) => {
     }
   }
   return add;
-}
+};
 //returns the tree element of a folder
 get_tree_el = (pre, folder, path) => {
   var el = `<div title='${path}' class='tree_el'>${pre} ${folder}</div>`;
   return el;
-}
+};
 /*
  * pre: file display name prefix
  * len_diff: difference in length to the first path
@@ -131,15 +156,15 @@ add_div_tree = () => {
   document.getElementById('div_tree_tree').addEventListener('click', (e) => {
     draw_files(e.target.title);
   });
-}
+};
 //gets folder list, gets first path length, draws the file tree
 print_tree = (path) => {
   add_div_tree();
   var list = get_folders(path);
   var len = list[0].file.split('\\').length;
   draw_tree(list, len);
-}
+};
 
 module.exports = {
   print_tree: print_tree,
-}
+};

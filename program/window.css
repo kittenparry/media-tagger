@@ -75,3 +75,11 @@ body {
 .selected {
   background: #337ab7;
 }
+.overflow-x {
+  overflow-x: auto;
+}
+.err_src {
+  border: 1px dotted grey;
+  background-color: #36454F;
+  color: #F0F0F0;
+}
