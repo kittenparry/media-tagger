@@ -5,15 +5,16 @@ display_errors = false;
 //draw files in accordance to the mouse click on tree
 draw_files = (dir) => {
   var dom = document.getElementById('div_files');
-  dom.innerHTML = '';
-  dom.innerHTML += `<h4>${dir}</h4>
+  dom.innerHTML = `<h4>${dir}</h4>
     <div id='div_sel_btns'>
       <button id='sel_all_btn'>Select All</button>
       <button id='desel_all_btn'>Deselect All</button>
       <label id='err_label'>Load errors?</label> <input id='err_check' type='checkbox'/>
     </div>
-    <div id='div_files_files'></div>`;
-  var div = document.getElementById('div_files_files');
+    <div>
+      <form id='form_files'></form>
+    </div>`;
+  var div = document.getElementById('form_files');
   div.addEventListener('click', (e) => {
     if(e.target.tagName === 'IMG'){
       image_check(e.target);
@@ -46,6 +47,11 @@ draw_files = (dir) => {
         </div>` ;
     }
   });
+  div.innerHTML += `<div id='div_sub_btns'>
+      <input type='text'/>
+      <button type='submit'>Add</button>
+      <button type='submit'>Remove</button>
+    </div>`;
 };
 //display an error message or don't display the div at all
 //on image load error
@@ -73,14 +79,16 @@ image_check = (e) => {
 };
 //check all the checkboxes
 select_all = (con) => {
-  var els = document.getElementById('div_files_files').childNodes;
+  var els = document.getElementById('form_files').childNodes;
   els.forEach((el) =>{
-    var checkbox = el.firstElementChild;
-    checkbox.checked = con;
-    if(checkbox.checked){
-      el.classList.add('selected');
-    }else{
-      el.classList.remove('selected');
+    if(el.firstElementChild.type == 'checkbox'){
+      var checkbox = el.firstElementChild;
+      checkbox.checked = con;
+      if(checkbox.checked){
+        el.classList.add('selected');
+      }else{
+        el.classList.remove('selected');
+      }
     }
   });
 };

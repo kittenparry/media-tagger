@@ -1,0 +1,10 @@
+[
+  {
+  "path": "path/to/image.jpg",
+  "tags": "nature, bees"
+  },
+  {
+    "path": "docs/project_logo.png",
+    "tags": "work, logo"
+  }
+]

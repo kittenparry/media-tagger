@@ -83,3 +83,12 @@ body {
   background-color: #36454F;
   color: #F0F0F0;
 }
+/* Probably add this as a fifth container? */
+#div_sub_btns {
+  position: fixed;
+  bottom: 3%;
+  background: #FFF;
+  border: 1px dotted grey;
+  width: 40%;
+  height: 10%;
+}
