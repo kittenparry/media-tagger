@@ -1,14 +1,16 @@
 const fs = require('fs');
 const path = require('path');
 
-files_test = () => {
+//draw files in accordance to the mouse click on tree
+draw_files = (dir) => {
   var dom = document.getElementById('div_files');
-  dom.innerHTML += `<h4>${test_one}</h4>
-    <ul id='ul_files'></ul>`;
-  var ul = document.getElementById('ul_files');
-  fs.readdirSync(test_one).forEach((file) => {
+  dom.innerHTML = '';
+  dom.innerHTML += `<h4>${dir}</h4>
+    <div id='div_files_files'></div>`;
+  var ul = document.getElementById('div_files_files');
+  fs.readdirSync(dir).forEach((file) => {
     ul.innerHTML += `<div class='thumbnail'>
-    <img class='' src='${path.join(test_one, file)}'/>
+    <img class='' src='${path.join(dir, file)}'/>
     </div>` ;
   })
 };
@@ -35,7 +37,7 @@ get_folders = (dir, filelist = []) => {
 //len: length of the first path in the tree
 draw_tree = (list, len = 0) => {
   var len = len;
-  var dom = document.getElementById('div_tree');
+  var dom = document.getElementById('div_tree_tree');
   for(var el of list){
     dom.innerHTML += get_tree_el(...get_values(el.file, len));
     for(var file of el.files){
@@ -57,11 +59,10 @@ get_pre = (len_diff) => {
   return add;
 }
 //returns the tree element of a folder
-get_tree_el = (pre, folder) => {
-  var el = `<div class='tree_el'>${pre} ${folder}</div>`;
+get_tree_el = (pre, folder, path) => {
+  var el = `<div title='${path}' class='tree_el'>${pre} ${folder}</div>`;
   return el;
 }
-//returns file prefix and folder name from file path and first path length
 /*
  * pre: file display name prefix
  * len_diff: difference in length to the first path
@@ -69,16 +70,26 @@ get_tree_el = (pre, folder) => {
  * add: file prefix with additional spaces depending on the len_diff
  * folder: folder name split from the path (last element of split_path)
  */
+//returns file prefix and folder name from file path and first path length
 get_values = (file, len) => {
   var pre = '└📁';
   var split_path = file.split('\\');
   var len_diff = split_path.length - len;
   var add = get_pre(len_diff) + pre;
   var folder = split_path[split_path.length - 1];
-  return [add, folder];
+  return [add, folder, file];
 };
+//adds a new div inside the container to hold the tree
+//binds a click event that then draws the files on files container
+add_div_tree = () => {
+  document.getElementById('div_tree').innerHTML += `<div id='div_tree_tree'></div>`;
+  document.getElementById('div_tree_tree').addEventListener('click', (e) => {
+    draw_files(e.target.title);
+  })
+}
 //gets folder list, gets first path length, draws the file tree
 print_tree = (path) => {
+  add_div_tree();
   var list = get_folders(path);
   var len = list[0].file.split('\\').length;
   draw_tree(list, len);
