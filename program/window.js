@@ -54,6 +54,12 @@ draw_files = (dir, tags = false) => {
       <button id='tags_add_btn'>Add</button>
       <button id='tags_rem_btn'>Remove</button>
     </div>`;
+  document.getElementById('input_tags').addEventListener('keyup', (e) => {
+    e.preventDefault();
+    if(e.key === "Enter"){
+      update_tags(e);
+    }
+  });
   document.getElementById('tags_add_btn').addEventListener('click', update_tags);
   document.getElementById('tags_rem_btn').addEventListener('click', remove_tags);
 };
@@ -210,7 +216,7 @@ get_tags_el = (tag, val) => {
   return el;
 };
 count_tags = () => {
-  var all_tags = Object.values(read_data).join(' ').split(' ');
+  var all_tags = Object.values(read_data).join(' ').split(' ').sort();
   var results = {};
   all_tags.forEach((x) => {results[x] = (results[x] || 0) + 1;});
   return results;
@@ -233,14 +239,8 @@ select_tag = (e) => {
     div.classList.remove('selected');
   }
 };
-remove_tags = (e) => {
-
-};
-update_tags = (e) => {
-  e.preventDefault();
+get_checked = () => {
   var form = document.getElementById('form_files');
-  var input = document.getElementById('input_tags');
-  var tags = input.value;
   var changes = [];
   for(var el of form){
     if(el.type == 'checkbox'){
@@ -255,6 +255,38 @@ update_tags = (e) => {
       }
     }
   }
+  return changes;
+};
+get_input = () => {
+  var input = document.getElementById('input_tags');
+  var tags = input.value;
+  input.value = "";
+  input.focus();
+  return tags;
+}
+remove_tags = (e) => {
+  e.preventDefault();
+  var del_tags = get_input();
+  var changes = get_checked();
+  for(var ch of changes){
+    try{
+      var ex_tags = read_data[ch].split(' ');
+      var up_split = del_tags.split(' ');
+      for(var up of up_split){
+        if(ex_tags.includes(up)){
+          ex_tags = ex_tags.filter((e) => {return e !== up});
+        }
+      }
+      read_data[ch] = ex_tags.sort().join(' ');
+    }catch(e){}
+  }
+  tags.save_db(read_data);
+  draw_tags();
+};
+update_tags = (e) => {
+  e.preventDefault();
+  var tags = get_input();
+  var changes = get_checked();
   var updates = {};
   for(var x=0;x<changes.length;x++){
     updates[changes[x]] = tags;
