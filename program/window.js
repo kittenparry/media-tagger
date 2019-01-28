@@ -22,7 +22,6 @@ draw_files = (dir, tags = false) => {
       image_check(e.target);
     }
   });
-  div.addEventListener('submit', update_tags);
   document.getElementById('div_sel_btns').addEventListener('click', (e) => {
     if(e.target.tagName === 'BUTTON'){
       var con;
@@ -51,10 +50,12 @@ draw_files = (dir, tags = false) => {
     });
   }
   div.innerHTML += `<div id='div_sub_btns'>
-      <input type='text'/>
-      <button type='submit'>Add</button>
-      <button type='submit'>Remove</button>
+      <input id='input_tags' type='text'/>
+      <button id='tags_add_btn'>Add</button>
+      <button id='tags_rem_btn'>Remove</button>
     </div>`;
+  document.getElementById('tags_add_btn').addEventListener('click', update_tags);
+  document.getElementById('tags_rem_btn').addEventListener('click', remove_tags);
 };
 get_img_el = (src) => {
   var el = `<div class='thumbnail'>
@@ -232,11 +233,13 @@ select_tag = (e) => {
     div.classList.remove('selected');
   }
 };
+remove_tags = (e) => {
+
+};
 update_tags = (e) => {
   e.preventDefault();
-  var form = e.target;
-  //get input box, most certainly there's a better way
-  var input = e.target[form.length - 3];
+  var form = document.getElementById('form_files');
+  var input = document.getElementById('input_tags');
   var tags = input.value;
   var changes = [];
   for(var el of form){

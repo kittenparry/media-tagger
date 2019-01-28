@@ -5,6 +5,7 @@ const fs = require('fs');
 const db_folder = path.join(__dirname, 'db');
 const db_path = path.join(__dirname, 'db/tags.json');
 //TODO: fix reading empty json file
+//also reading empty tags
 read_db = () => {
   if(fs.existsSync(db_path)){
     //TODO: try catch
