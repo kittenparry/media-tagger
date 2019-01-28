@@ -5,7 +5,7 @@ const tags = require('./tags');
 display_errors = false;
 read_data = {};
 //draw files in accordance to the mouse click on tree
-draw_files = (dir) => {
+draw_files = (dir, tags = false) => {
   var dom = document.getElementById('div_files');
   dom.innerHTML = `<h4>${dir}</h4>
     <div id='div_sel_btns'>
@@ -37,23 +37,31 @@ draw_files = (dir) => {
     }
   });
   document.getElementById('err_check').checked = display_errors;
-  fs.readdirSync(dir).forEach((file) => {
-    var dir_file = path.join(dir, file);
-    var dirent = fs.statSync(dir_file);
-    //check if the src is a directory (more like if it isn't)
-    if(!dirent.isDirectory()){
-      div.innerHTML += `<div class='thumbnail'>
-        <input class='inv' type='checkbox'/>
-        <img src='${path.join(dir, file)}'
-        onerror='image_load_err(this);'/>
-        </div>` ;
-    }
-  });
+  if(tags){
+
+  }else{
+    fs.readdirSync(dir).forEach((file) => {
+      var dir_file = path.join(dir, file);
+      var dirent = fs.statSync(dir_file);
+      //check if the src is a directory (more like if it isn't)
+      if(!dirent.isDirectory()){
+        div.innerHTML += get_img_el(path.join(dir, file));
+      }
+    });
+  }
   div.innerHTML += `<div id='div_sub_btns'>
       <input type='text'/>
       <button type='submit'>Add</button>
       <button type='submit'>Remove</button>
     </div>`;
+};
+get_img_el = (src) => {
+  var el = `<div class='thumbnail'>
+    <input class='inv' type='checkbox'/>
+    <img src='${src}'
+    onerror='image_load_err(this);'/>
+  </div>`;
+  return el;
 };
 //display an error message or don't display the div at all
 //on image load error
@@ -176,27 +184,44 @@ draw_tags = () => {
   </form>`;
   var dom = document.getElementById('div_tags_tags');
   dom.addEventListener('click', (e) => {
-    //event
-    //similar checkbox selection to the images
+    select_tag(e.target);
   });
   var tags_dict = count_tags();
   for(var el of Object.entries(tags_dict)){
     dom.innerHTML += get_tags_el(...el);
   }
-}
+};
 get_tags_el = (tag, val) => {
   var el = `<div title='${tag}' class='tags_el'>
     <input class='inv' type='checkbox'/>
     ${tag} <span class='tag_bg'>${val}</span>
     </div>`;
   return el;
-}
+};
 count_tags = () => {
   var all_tags = Object.values(read_data).join(' ').split(' ');
   var results = {};
   all_tags.forEach((x) => {results[x] = (results[x] || 0) + 1;});
   return results;
-}
+};
+select_tag = (e) => {
+  //catch SPAN
+  var checkbox;
+  var div;
+  if(e.tagName === 'SPAN'){
+    checkbox = e.parentElement.firstElementChild;
+    div = e.parentElement;
+  }else{
+    checkbox = e.firstElementChild;
+    div = e;
+  }
+  checkbox.checked = !checkbox.checked;
+  if(checkbox.checked){
+    div.classList.add('selected');
+  }else{
+    div.classList.remove('selected');
+  }
+};
 //gets folder list, gets first path length, draws the file tree
 print_tree = (path) => {
   read_data = tags.read_db();

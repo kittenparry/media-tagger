@@ -72,9 +72,6 @@ body {
 .inv {
   display: none;
 }
-.selected {
-  background: #337ab7;
-}
 .overflow-x {
   overflow-x: auto;
 }
@@ -104,4 +101,8 @@ body {
   background: #36454F;
   color: #F0F0F0;
   padding: 0 3%;
+}
+.selected {
+  background: #337ab7;
+  color: #F0F0F0;
 }
