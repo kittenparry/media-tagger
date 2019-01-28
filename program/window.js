@@ -22,6 +22,7 @@ draw_files = (dir, tags = false) => {
       image_check(e.target);
     }
   });
+  div.addEventListener('submit', update_tags);
   document.getElementById('div_sel_btns').addEventListener('click', (e) => {
     if(e.target.tagName === 'BUTTON'){
       var con;
@@ -68,12 +69,16 @@ get_img_el = (src) => {
 image_load_err = (img) => {
   var div = img.parentNode;
   if(display_errors){
-    img.classList.add('inv');
+    var src = img.src;
+    //img.classList.add('inv');
+    //instead remove it to prevent source grabbing from tag updates when select_all is used
+    img.remove();
     div.classList.add('overflow-x');
     div.innerHTML = `Error loading the media.<br/>
-    <span class='err_src'>${img.src}</span><br/>`;
+    <span class='err_src'>${src}</span><br/>`;
   }else{
     div.classList.add('inv');
+    img.remove();
   }
 };
 //check the checkbox that exists in the same div as the image
@@ -178,11 +183,12 @@ add_div_tree = () => {
 //TODO: add sorting methods to the tags
 draw_tags = () => {
   var div = document.getElementById('div_tags');
-  div.innerHTML += `<form id='form_tags'>
+  div.innerHTML = `<form id='form_tags'>
   <button type='submit'>Filter</button>
   <div id='div_tags_tags'></div>
   </form>`;
   var dom = document.getElementById('div_tags_tags');
+  document.getElementById('form_tags').addEventListener('submit', filter_tags);
   dom.addEventListener('click', (e) => {
     select_tag(e.target);
   });
@@ -190,6 +196,10 @@ draw_tags = () => {
   for(var el of Object.entries(tags_dict)){
     dom.innerHTML += get_tags_el(...el);
   }
+};
+filter_tags = (e) => {
+  e.preventDefault();
+  console.log(e);
 };
 get_tags_el = (tag, val) => {
   var el = `<div title='${tag}' class='tags_el'>
@@ -221,6 +231,69 @@ select_tag = (e) => {
   }else{
     div.classList.remove('selected');
   }
+};
+update_tags = (e) => {
+  e.preventDefault();
+  var form = e.target;
+  //get input box, most certainly there's a better way
+  var input = e.target[form.length - 3];
+  var tags = input.value;
+  var changes = [];
+  for(var el of form){
+    if(el.type == 'checkbox'){
+      if(el.checked){
+        try{
+          //should probably move up the try-catch to also get checkbox
+          var img = el.parentElement.children[1];
+          if(img.tagName = 'IMG'){
+            changes.push(img.src);
+          }
+        }catch(e){}
+      }
+    }
+  }
+  var updates = {};
+  for(var x=0;x<changes.length;x++){
+    updates[changes[x]] = tags;
+  }
+  check_tag_updates(updates, tags);
+};
+check_tag_updates = (updates, new_tags) => {
+  var ex_path = Object.keys(read_data);
+  var updated = Object.entries(updates);
+  var temp_changes = [];
+  var temp_new = [];
+  //check if the path exists in the db
+  for(var up of updated){
+    if(ex_path.includes(up[0])){
+      temp_changes.push(up[0]);
+    }else{
+      temp_new.push(up[0]);
+    }
+  }
+  for(var ch of temp_changes){
+    var ex_split = read_data[ch].split(' ');
+    var up_split = new_tags.split(' ');
+    var combined = ex_split.concat(up_split).sort();
+    var results = remove_duplicates(combined).join(' ');
+    read_data[ch] = results;
+  }
+  for(var ne of temp_new){
+    read_data[ne] = new_tags;
+  }
+  tags.save_db(read_data);
+  draw_tags();
+};
+remove_duplicates = (arr) => {
+  output = [];
+  temp = {};
+  for(var x=0;x<arr.length;x++){
+    temp[arr[x]] = 0;
+  }
+  for(var i in temp){
+    output.push(i);
+  }
+  return output;
 };
 //gets folder list, gets first path length, draws the file tree
 print_tree = (path) => {

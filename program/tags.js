@@ -4,6 +4,7 @@ const fs = require('fs');
 //maybe have a constants file for this
 const db_folder = path.join(__dirname, 'db');
 const db_path = path.join(__dirname, 'db/tags.json');
+//TODO: fix reading empty json file
 read_db = () => {
   if(fs.existsSync(db_path)){
     //TODO: try catch
@@ -17,14 +18,6 @@ read_db = () => {
     //or rerun the function?
   }
 };
-//req db, array of key and values? maybe [][]?
-//Object.keys/values/entries()
-update_db = (db, updates) => {
-  for(var el of Object.entries(updates)){
-    db[el[0]] = el[1];
-  }
-  save_db(db);
-};
 save_db = (db) => {
   //TODO: add try catch
   fs.writeFileSync(db_path, JSON.stringify(db));
@@ -34,5 +27,5 @@ save_db = (db) => {
 module.exports = {
   db_path: db_path,
   read_db: read_db,
-  update_db: update_db,
+  save_db: save_db,
 };
