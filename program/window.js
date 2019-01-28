@@ -1,7 +1,9 @@
 const fs = require('fs');
 const path = require('path');
+const tags = require('./tags');
 
 display_errors = false;
+read_data = {};
 //draw files in accordance to the mouse click on tree
 draw_files = (dir) => {
   var dom = document.getElementById('div_files');
@@ -165,12 +167,44 @@ add_div_tree = () => {
     draw_files(e.target.title);
   });
 };
+//TODO: add sorting methods to the tags
+draw_tags = () => {
+  var div = document.getElementById('div_tags');
+  div.innerHTML += `<form id='form_tags'>
+  <button type='submit'>Filter</button>
+  <div id='div_tags_tags'></div>
+  </form>`;
+  var dom = document.getElementById('div_tags_tags');
+  dom.addEventListener('click', (e) => {
+    //event
+    //similar checkbox selection to the images
+  });
+  var tags_dict = count_tags();
+  for(var el of Object.entries(tags_dict)){
+    dom.innerHTML += get_tags_el(...el);
+  }
+}
+get_tags_el = (tag, val) => {
+  var el = `<div title='${tag}' class='tags_el'>
+    <input class='inv' type='checkbox'/>
+    ${tag} <span class='tag_bg'>${val}</span>
+    </div>`;
+  return el;
+}
+count_tags = () => {
+  var all_tags = Object.values(read_data).join(' ').split(' ');
+  var results = {};
+  all_tags.forEach((x) => {results[x] = (results[x] || 0) + 1;});
+  return results;
+}
 //gets folder list, gets first path length, draws the file tree
 print_tree = (path) => {
+  read_data = tags.read_db();
   add_div_tree();
   var list = get_folders(path);
   var len = list[0].file.split('\\').length;
   draw_tree(list, len);
+  draw_tags();
 };
 
 module.exports = {

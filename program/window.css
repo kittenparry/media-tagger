@@ -92,3 +92,16 @@ body {
   width: 40%;
   height: 10%;
 }
+.tags_el {
+  background: #FFF;
+  border: 1px solid #36454F;
+  cursor: pointer;
+  text-align: justify;
+  text-align-last: justify;
+  padding: 0 0 0 3%;
+}
+.tag_bg {
+  background: #36454F;
+  color: #F0F0F0;
+  padding: 0 3%;
+}
