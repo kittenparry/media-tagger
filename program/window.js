@@ -52,11 +52,6 @@ draw_files = (dir, tags = false, selected = []) => {
       }
     });
   }
-  div.innerHTML += `<div id='div_sub_btns'>
-      <input id='input_tags' type='text'/>
-      <button id='tags_add_btn'>Add</button>
-      <button id='tags_rem_btn'>Remove</button>
-    </div>`;
   document.getElementById('input_tags').addEventListener('keyup', (e) => {
     e.preventDefault();
     if(e.key === "Enter"){
@@ -381,11 +376,13 @@ search_tags = (e) => {
   draw_files(will_print, true, selected);
 };
 draw_search = () => {
-  var div = document.getElementById('div_search');
-  div.innerHTML += `<form id='search_form'>
-    <input id='input_search' type='text'/>
-    <input type='submit' value='Search'/>`
-  document.getElementById('search_form').addEventListener('submit', search_tags);
+  document.getElementById('input_search').addEventListener('keyup', (e) => {
+    e.preventDefault();
+    if(e.key === "Enter"){
+      search_tags(e);
+    }
+  });
+  document.getElementById('search_btn').addEventListener('click', search_tags);
 };
 //gets folder list, gets first path length, draws the file tree
 print_tree = (path) => {

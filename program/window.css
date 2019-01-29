@@ -81,14 +81,14 @@ body {
   color: #F0F0F0;
 }
 /* Probably add this as a fifth container? */
-#div_sub_btns {
+/* #div_sub_btns {
   position: fixed;
   bottom: 3%;
   background: #FFF;
   border: 1px dotted grey;
   width: 40%;
   height: 10%;
-}
+} */
 .tags_el {
   background: #FFF;
   border: 1px solid #36454F;
@@ -105,4 +105,17 @@ body {
 .selected {
   background: #337ab7;
   color: #F0F0F0;
+}
+button {
+  background: #36454F;
+  border: 1px solid #F0F0F0;
+  color: #F0F0F0;
+  padding: 5px;
+  flex: 1;
+  cursor: pointer;
+}
+.input {
+  flex: 10;
+  /* line-height: 100%; */
+  font-size: 100%;
 }

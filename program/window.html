@@ -15,11 +15,20 @@
       </div>
     </div>
     <div class='flex-col flex-7'>
-      <div id='div_search' class='display_div flex-1'>
-        <h3>search</h3>
+      <div id='div_search' class='display_div flex-row flex-1'>
+        <!-- <h3>search</h3> -->
+        <input class='input' id='input_search' type='text'
+        placeholder='Type in tags to search...'/>
+        <button id='search_btn'>Search</button>
       </div>
       <div id='div_files' class='display_div overflow-y flex-19'>
         <h3>files</h3>
+      </div>
+      <div class='display_div flex-row flex-1' id='div_sub_btns'>
+        <input class='input' id='input_tags' type='text'
+        placeholder='Type in tags to apply to the selected media...'/>
+        <button id='tags_add_btn'>Add</button>
+        <button id='tags_rem_btn'>Remove</button>
       </div>
     </div>
     <script src='main.js'></script>
