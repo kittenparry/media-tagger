@@ -2,18 +2,14 @@ const fs = require('fs');
 const path = require('path');
 const tags = require('./tags');
 
+//TODO: switching isn't working correctly
 display_errors = false;
 read_data = {};
 //draw files in accordance to the mouse click on tree
 draw_files = (dir, tags = false, selected = []) => {
   var dom = document.getElementById('div_files');
-  dom.innerHTML = `<h4 id='title_files'>${dir}</h4>
-    <div id='div_sel_btns'>
-      <button id='sel_all_btn'>Select All</button>
-      <button id='desel_all_btn'>Deselect All</button>
-      <label id='err_label'>Load errors?</label> <input id='err_check' type='checkbox'/>
-    </div>
-    <div>
+  document.getElementById('title_files').innerHTML = dir;
+  dom.innerHTML = `<div>
       <form id='form_files'></form>
     </div>`;
   var div = document.getElementById('form_files');
