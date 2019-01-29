@@ -359,6 +359,34 @@ remove_duplicates = (arr) => {
   }
   return output;
 };
+search_tags = (e) => {
+  e.preventDefault();
+  //TODO: basically the same function as filter_tags
+  var input = document.getElementById('input_search');
+  var selected = input.value.replace(/\s+/g, " ").trim().split(' ');
+  input.value = "";
+  input.focus();
+  var read_vals = Object.values(read_data);
+  var read_keys = Object.keys(read_data);
+  var will_print = [];
+  for(var x=0;x<read_vals.length;x++){
+    var split_read = read_vals[x].split(' ');
+    for(var tag of selected){
+      if(split_read.includes(tag)){
+        will_print.push(read_keys[x]);
+      }
+    }
+  }
+  will_print = remove_duplicates(will_print);
+  draw_files(will_print, true, selected);
+};
+draw_search = () => {
+  var div = document.getElementById('div_search');
+  div.innerHTML += `<form id='search_form'>
+    <input id='input_search' type='text'/>
+    <input type='submit' value='Search'/>`
+  document.getElementById('search_form').addEventListener('submit', search_tags);
+};
 //gets folder list, gets first path length, draws the file tree
 print_tree = (path) => {
   read_data = tags.read_db();
@@ -367,6 +395,7 @@ print_tree = (path) => {
   var len = list[0].file.split('\\').length;
   draw_tree(list, len);
   draw_tags();
+  draw_search();
 };
 
 module.exports = {
