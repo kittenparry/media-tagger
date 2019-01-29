@@ -14,8 +14,8 @@ read_db = () => {
     if(!fs.existsSync(db_folder)){
       fs.mkdirSync(db_folder);
     }
-    fs.writeFileSync(db_path, '{}');
-    return '{}'; //maybe put this into a variable?
+    fs.writeFileSync(db_path, JSON.stringify({}));
+    return read_db(); //maybe put this into a variable?
     //or rerun the function?
   }
 };
