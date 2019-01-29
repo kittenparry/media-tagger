@@ -5,9 +5,9 @@ const tags = require('./tags');
 display_errors = false;
 read_data = {};
 //draw files in accordance to the mouse click on tree
-draw_files = (dir, tags = false) => {
+draw_files = (dir, tags = false, selected = []) => {
   var dom = document.getElementById('div_files');
-  dom.innerHTML = `<h4>${dir}</h4>
+  dom.innerHTML = `<h4 id='title_files'>${dir}</h4>
     <div id='div_sel_btns'>
       <button id='sel_all_btn'>Select All</button>
       <button id='desel_all_btn'>Deselect All</button>
@@ -38,7 +38,10 @@ draw_files = (dir, tags = false) => {
   });
   document.getElementById('err_check').checked = display_errors;
   if(tags){
-
+    document.getElementById('title_files').innerHTML = selected.join(' ');
+    for(var tag of dir){
+      div.innerHTML += get_img_el(tag);
+    }
   }else{
     fs.readdirSync(dir).forEach((file) => {
       var dir_file = path.join(dir, file);
@@ -206,11 +209,24 @@ draw_tags = () => {
 };
 filter_tags = (e) => {
   e.preventDefault();
-  console.log(e);
+  var selected = get_checked_tag();
+  var read_vals = Object.values(read_data);
+  var read_keys = Object.keys(read_data);
+  var will_print = [];
+  for(var x=0;x<read_vals.length;x++){
+    var split_read = read_vals[x].split(' ');
+    for(var tag of selected){
+      if(split_read.includes(tag)){
+        will_print.push(read_keys[x]);
+      }
+    }
+  }
+  will_print = remove_duplicates(will_print);
+  draw_files(will_print, true, selected);
 };
 get_tags_el = (tag, val) => {
   var el = `<div title='${tag}' class='tags_el'>
-    <input class='inv' type='checkbox'/>
+    <input class='inv' type='checkbox' value='${tag}'/>
     ${tag} <span class='tag_bg'>${val}</span>
     </div>`;
   return el;
@@ -239,6 +255,18 @@ select_tag = (e) => {
     div.classList.remove('selected');
   }
 };
+get_checked_tag = () => {
+  var form = document.getElementById('form_tags');
+  var changes = [];
+  for(var el of form){
+    if(el.type == 'checkbox'){
+      if(el.checked){
+        changes.push(el.value);
+      }
+    }
+  }
+  return changes;
+};
 get_checked = () => {
   var form = document.getElementById('form_files');
   var changes = [];
@@ -259,7 +287,8 @@ get_checked = () => {
 };
 get_input = () => {
   var input = document.getElementById('input_tags');
-  var tags = input.value;
+  //remove additional whitespace (eg. "  hi    simon   " => "hi simon")
+  var tags = input.value.replace(/\s+/g, " ").trim();
   input.value = "";
   input.focus();
   return tags;
