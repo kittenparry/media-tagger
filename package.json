@@ -1,6 +1,6 @@
 {
   "name": "media-tagger",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A booru-like tagging software for images and videos.",
   "author": "Edvin Boul",
   "license": "MIT",
