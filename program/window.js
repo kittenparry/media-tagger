@@ -8,10 +8,10 @@ read_data = {};
 //draw files in accordance to the mouse click on tree
 draw_files = (dir, tags = false, selected = []) => {
   var dom = document.getElementById('div_files');
-  document.getElementById('title_files').innerHTML = dir;
   dom.innerHTML = `<div>
       <form id='form_files'></form>
     </div>`;
+  document.getElementById('title_files').innerHTML = dir;
   var div = document.getElementById('form_files');
   div.addEventListener('click', (e) => {
     if(e.target.tagName === 'IMG'){
@@ -40,12 +40,14 @@ draw_files = (dir, tags = false, selected = []) => {
     }
   }else{
     fs.readdirSync(dir).forEach((file) => {
-      var dir_file = path.join(dir, file);
-      var dirent = fs.statSync(dir_file);
-      //check if the src is a directory (more like if it isn't)
-      if(!dirent.isDirectory()){
-        div.innerHTML += get_img_el(path.join(dir, file));
-      }
+      try{
+        var dir_file = path.join(dir, file);
+        var dirent = fs.statSync(dir_file);
+        //check if the src is a directory (more like if it isn't)
+        if(!dirent.isDirectory()){
+          div.innerHTML += get_img_el(path.join(dir, file));
+        }
+      }catch(e){}
     });
   }
   document.getElementById('input_tags').addEventListener('keyup', (e) => {
@@ -188,7 +190,8 @@ add_div_tree = () => {
 //TODO: add sorting methods to the tags
 draw_tags = () => {
   var div = document.getElementById('div_tags');
-  div.innerHTML = `<form id='form_tags'>
+  div.innerHTML = `<h3>Tags</h3>
+  <form id='form_tags'>
   <button type='submit'>Filter</button>
   <div id='div_tags_tags'></div>
   </form>`;
@@ -384,17 +387,24 @@ draw_search = () => {
   });
   document.getElementById('search_btn').addEventListener('click', search_tags);
 };
+folder_select = () => {
+  var folder = document.getElementById('input_folder');
+  folder.onchange = () => {
+    draw_files(folder.files[0].path);
+  };
+};
 //gets folder list, gets first path length, draws the file tree
-print_tree = (path) => {
+draw_all = () => {
   read_data = tags.read_db();
-  add_div_tree();
-  var list = get_folders(path);
-  var len = list[0].file.split('\\').length;
-  draw_tree(list, len);
+  // add_div_tree();
+  // var list = get_folders(path);
+  // var len = list[0].file.split('\\').length;
+  // draw_tree(list, len);
   draw_tags();
   draw_search();
+  folder_select();
 };
 
 module.exports = {
-  print_tree: print_tree,
+  draw_all: draw_all,
 };

@@ -119,3 +119,6 @@ button {
   /* line-height: 100%; */
   font-size: 100%;
 }
+#input_folder {
+  padding: 5%;
+}
