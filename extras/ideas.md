@@ -21,7 +21,6 @@
 - [ ] Option to sever ties with broken paths of tagged images
 - [ ] Options/About on a pop-out using Electron?
   - [ ] Have them both on the same pop-up with tabbed navigation?
-
   ### Options
   - [ ] Display tags of the images under them? Maybe a toggle?
   - [ ] Move "Load Errors?" to an options section with the one above?
