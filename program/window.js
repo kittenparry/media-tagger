@@ -112,25 +112,22 @@ select_all = (con) => {
 get_folders = (dir, filelist = []) => {
   var everything = fs.readdirSync(dir);
   for(var file of everything){
-    var dir_file = path.join(dir, file);
-    var dirent = fs.statSync(dir_file); //read err
-    console.log(dirent);
-    //check if a path is directory
-    //if it is run the function again
-    if(dirent.mod == 16822){
-      console.log('mod 16822');
-      
-    }else{
-
-    }
-    if(dirent.isDirectory()){
-      var dir_cont = {file: dir_file, files: []};
-      dir_cont.files = get_folders(dir_file, dir.files); //read err
-      filelist.push(dir_cont);
-    }else{
-      //filelist.push({file: dir_file});
-      //add non-folders to the filelist
-      //not needed for the project
+    try{
+      var dir_file = path.join(dir, file);
+      var dirent = fs.statSync(dir_file); //read err
+      //check if a path is directory
+      //if it is run the function again
+      if(dirent.isDirectory()){
+        var dir_cont = {file: dir_file, files: []};
+        dir_cont.files = get_folders(dir_file, dir.files); //read err
+        filelist.push(dir_cont);
+      }else{
+        //filelist.push({file: dir_file});
+        //add non-folders to the filelist
+        //not needed for the project
+      }
+    }catch(e){
+      // console.log(e);
     }
   }
   return filelist;

@@ -3,4 +3,4 @@
 #production
 /build
 #database
-/db
+/program/db

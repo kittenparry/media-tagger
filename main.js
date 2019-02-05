@@ -30,7 +30,7 @@ app.on('ready', function(){
   //insert menu
   Menu.setApplicationMenu(main_menu);
   //start with dev tools opened
-  //main_window.webContents.openDevTools();
+  main_window.webContents.openDevTools();
 });
 //menu template
 const main_menu_template = [
