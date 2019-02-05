@@ -8,7 +8,7 @@
 - [ ] Themes with colour palettes?
 - [ ] Makeover to rest of the buttons to make them similar to search/add/remove
 
-### Functional
+### General Functional
 - [x] Select folder instead of a tree?
 - [ ] Remove all tags option for selected
 - [ ] Delete database option
@@ -21,10 +21,11 @@
 - [ ] Option to sever ties with broken paths of tagged images
 - [ ] Options/About on a pop-out using Electron?
   - [ ] Have them both on the same pop-up with tabbed navigation?
-  ### Options
-  - [ ] Display tags of the images under them? Maybe a toggle?
-  - [ ] Move "Load Errors?" to an options section with the one above?
-  - [ ] Deselect after applying tag option?
-  - [ ] Save options to a json as well
-  - [ ] A setting for search to return AND instead of OR
-  - [ ] Radio buttons and save option
+
+### Options Menu
+- [ ] Display tags of the images under them? Maybe a toggle?
+- [ ] Move "Load Errors?" to an options section with the one above?
+- [ ] Deselect after applying tag option?
+- [ ] Save options to a json as well
+- [ ] A setting for search to return AND instead of OR
+- [ ] Radio buttons and save option
