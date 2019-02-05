@@ -7,11 +7,12 @@
   </head>
   <body>
     <div class='flex-col flex-2'>
-      <div id='div_tree' class='display_div flex-3'>
-        <h3>tree</h3>
+      <div id='div_folder_sel' class='display_div flex-1'>
+        <h3>Select Folder</h3>
+        <input id='input_folder' type='file' webkitdirectory  directory/>
+        <!-- does directory do anything here? -->
       </div>
-      <div id='div_tags' class='display_div overflow-y flex-2'>
-        <h3>tags</h3>
+      <div id='div_tags' class='display_div overflow-y flex-7'>
       </div>
     </div>
     <div class='flex-col flex-7'>
@@ -22,13 +23,12 @@
         <button id='search_btn'>Search</button>
       </div>
       <div id='div_sel_btns' class='display_div'>
-        <h4 id='title_files'></h4>
         <button id='sel_all_btn'>Select All</button>
         <button id='desel_all_btn'>Deselect All</button>
         <label id='err_label'>Load errors?</label> <input id='err_check' type='checkbox'/>
+        <h4 id='title_files'></h4>
       </div>
       <div id='div_files' class='display_div overflow-y flex-19'>
-        <h3>files</h3>
       </div>
       <div class='display_div flex-row flex-1' id='div_sub_btns'>
         <input class='input' id='input_tags' type='text'

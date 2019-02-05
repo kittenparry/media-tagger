@@ -2,16 +2,13 @@
 A booru-like tagging software for images and videos*.
 
 ### Current Functionality
-On a pre-specified path in `program/main.js`:
-* Add/remove tags of selected image files
+* On a selected folder add/remove tags of selected images
 * Get images by selecting or searching for tags
-* Save tags to `db/tags.json`
+* Save tags to `db/tags.json` file
 
 ![](extras/screenshot.png)
 
 ### Current Problems
-* Inability to choose folders instead of typing them in manually
-  * This is caused by file permission errors
 * No videos
 * Some visual errors
 
