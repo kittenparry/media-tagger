@@ -1,16 +1,18 @@
 ## Ideas/To-do
 
 ### Visual-ish
-- [ ] Switch to grid from flex?
+- [ ] ~~Switch to grid from flex?~~
 - [ ] ~~Move select all etc. to left?~~
 - [ ] Hide file choose input with label for
 - [ ] Display something when no images are present in the current folder
+  - [ ] "Select tags to filter" when no tags are selected
+  - [ ] "No tags exist" when there are no tags
 - [ ] Themes with colour palettes?
 - [ ] Makeover to rest of the buttons to make them similar to search/add/remove
 
 ### General Functional
 - [x] Select folder instead of a tree?
-- [ ] Remove all tags option for selected
+- [ ] Remove all tags option for selected images
 - [ ] Delete database option
 - [ ] Back up database option?
   - [ ] Maybe simply open db folder when clicked for manual backup?
@@ -23,6 +25,7 @@
   - [ ] Have them both on the same pop-up with tabbed navigation?
 - [ ] Double click image to open with the default viewer?
 - [ ] Probably turn some of the CSS into a common file used between windows
+- [ ] Catch empty database reading eg. {}
 
 ### Options Menu
 - [ ] * Display tags of the images under them? Maybe a toggle?
@@ -30,5 +33,9 @@
 - [ ] * Deselect after applying tag option?
 - [ ] Save options to a json as well
 - [ ] A setting for search to return AND instead of OR
-- [ ] * Radio buttons and save option
-- [ ] * Also add options to the menu bar
+- [x] Radio buttons and save option
+- [x] Also add options to the menu bar
+
+### Bugs
+- [ ] Tags display an empty line, presumably for everything tagged
+- [ ] Load errors? doesn't work properly
