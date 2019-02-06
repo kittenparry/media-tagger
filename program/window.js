@@ -403,6 +403,9 @@ draw_all = () => {
   draw_tags();
   draw_search();
   folder_select();
+  //TODO: remove below
+  //added for quicker testing
+  draw_files('E:/from4chan/4chan/wg/7018088');
 };
 
 module.exports = {

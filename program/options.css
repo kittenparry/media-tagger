@@ -1,0 +1,22 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: Tahoma, Geneva, sans-serif;
+  line-height: 1.4;
+  background: #F0F0F0;
+  color: #36454F;
+  margin: 5px;
+}
+button {
+  background: #36454F;
+  border: 1px solid #F0F0F0;
+  color: #F0F0F0;
+  padding: 5px;
+  flex: 1;
+  cursor: pointer;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}

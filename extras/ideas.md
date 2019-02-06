@@ -19,13 +19,16 @@
 - [ ] Sorting for tags
 - [ ] Warn before loading a ton of images?
 - [ ] Option to sever ties with broken paths of tagged images
-- [ ] Options/About on a pop-out using Electron?
+- [x] Options/About on a pop-out using Electron?
   - [ ] Have them both on the same pop-up with tabbed navigation?
+- [ ] Double click image to open with the default viewer?
+- [ ] Probably turn some of the CSS into a common file used between windows
 
 ### Options Menu
-- [ ] Display tags of the images under them? Maybe a toggle?
-- [ ] Move "Load Errors?" to an options section with the one above?
-- [ ] Deselect after applying tag option?
+- [ ] * Display tags of the images under them? Maybe a toggle?
+- [ ] * Move "Load Errors?" to an options section with the one above?
+- [ ] * Deselect after applying tag option?
 - [ ] Save options to a json as well
 - [ ] A setting for search to return AND instead of OR
-- [ ] Radio buttons and save option
+- [ ] * Radio buttons and save option
+- [ ] * Also add options to the menu bar

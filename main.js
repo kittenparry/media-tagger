@@ -5,9 +5,10 @@ const path = require('path');
 const {app, BrowserWindow, Menu} = electron;
 
 let main_window;
+let options_window;
 
 //app ready
-app.on('ready', function(){
+app.on('ready', () => {
   //create window
   main_window = new BrowserWindow({
     width: 1280,
@@ -21,7 +22,7 @@ app.on('ready', function(){
     slashes: true,
   }));
   //quit on main window close
-  main_window.on('closed', function(){
+  main_window.on('closed', () => {
     app.quit();
     main_window = null;
   });
@@ -32,11 +33,33 @@ app.on('ready', function(){
   //start with dev tools opened
   // main_window.webContents.openDevTools();
 });
+//open options window function
+const open_options = () => {
+  options_window = new BrowserWindow({
+    width: 400,
+    height: 300,
+  });
+  options_window.loadURL(url.format({
+    pathname: path.join(__dirname, 'program/options.html'),
+    protocol: 'file',
+    slashes: true,
+  }));
+  options_window.on('close', () => {
+    options_window = null;
+  });
+};
 //menu template
 const main_menu_template = [
   {
     label: 'File',
     submenu: [
+      {
+        label: 'Options',
+        accelerator: process.platform == 'darwin' ? 'Command+P' : 'Ctrl+P',
+        click(){
+          open_options();
+        }
+      },
       {
         label: 'Close',
         accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
