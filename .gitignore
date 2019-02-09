@@ -4,3 +4,5 @@
 /build
 #database
 /program/db
+#settings
+program/options
