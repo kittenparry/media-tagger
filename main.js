@@ -35,6 +35,12 @@ app.on('ready', () => {
 });
 //open options window function
 const open_options = () => {
+  // prevents multiple instances of options_window
+  // and brings it to front
+  if(options_window != null){
+    options_window.show();
+    return;
+  }
   options_window = new BrowserWindow({
     width: 400,
     height: 300,
@@ -44,7 +50,7 @@ const open_options = () => {
     protocol: 'file',
     slashes: true,
   }));
-  options_window.on('close', () => {
+  options_window.on('close', () => { //close, not closed
     options_window = null;
   });
 };
