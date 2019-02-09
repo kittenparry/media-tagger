@@ -31,10 +31,11 @@
 - [ ] * Display tags of the images under them? Maybe a toggle?
 - [ ] * Move "Load Errors?" to an options section with the one above?
 - [ ] * Deselect after applying tag option?
-- [ ] Save options to a json as well
+- [x] Save options to a json as well
 - [ ] A setting for search to return AND instead of OR
 - [x] Radio buttons and save option
 - [x] Also add options to the menu bar
+- [ ] Catch broken settings and give option to reset them
 
 ### Bugs
 - [ ] Tags display an empty line, presumably for everything tagged
