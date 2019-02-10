@@ -6,7 +6,7 @@ A booru-like tagging software for images and videos*.
 * Get images by selecting or searching for tags
 * Save tags to `db/tags.json` file
 
-![](extras/screenshot.png)
+![](https://raw.githubusercontent.com/kittenparry/media-tagger/master/extras/screenshot.png)
 
 ### Current Problems
 * No videos
