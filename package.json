@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "A booru-like tagging software for images and videos.",
   "author": "Edvin Boul",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
