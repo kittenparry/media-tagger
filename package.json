@@ -12,6 +12,6 @@
     "package-linux": "electron-packager . media-tagger --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/icon.png --prune=true --out=release-builds"
   },
   "devDependencies": {
-    "electron": "^4.0.2"
+    "electron": "^7.2.4"
   }
 }
